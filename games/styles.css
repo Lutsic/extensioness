@@ -1,0 +1,136 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background-color: #202428;
+    font-family:Segoe UI, sans-serif;
+    color:white;
+    padding:40px;
+}
+
+#games{
+    padding-top: 10vh;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(420px,1fr));
+    gap:22px;
+}
+
+#hostings{
+    padding-top: 10vh;
+    display:none;
+    grid-template-columns:repeat(auto-fill,minmax(420px,1fr));
+    gap:22px;
+}
+
+#hostings_btn_active {
+    display: none;
+    color: #04dfd9;
+}
+
+#games_btn_active {
+    color: #04dfd9;
+}
+
+#games_btn {
+    color: #c8d4dd;
+}
+
+.btn {
+    margin-left: 5vw;
+    margin-right: 5vw;
+    color: #83878a;
+    background: transparent;
+    font-size: 2vw;
+    border: none;
+}
+
+.btn:hover{
+    transform: scale(1.1);
+    transition: 0.5s;  
+}
+
+.card{
+    text-decoration:none;
+    color:inherit;
+
+    background-color: #2b3035;
+    border-radius:18px;
+    overflow:hidden;
+
+    transition:.25s;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+    border-color:rgba(255,255,255,.08);
+}
+
+.card-image{
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    display:block;
+}
+
+.card-content{
+    padding:18px;
+}
+
+.card-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.icon{
+    width:52px;
+    height:52px;
+    border-radius:12px;
+}
+
+.title-box h3{
+    font-size:22px;
+    font-weight:700;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.title-box p{
+    color:#9fa6b4;
+    margin-top:3px;
+}
+
+.description{
+    color:#c6ccd5;
+    margin:16px 0;
+    line-height:1.5;
+}
+
+.tags span{
+    background:#303541;
+    color:#cfd6df;
+
+    border-radius:999px;
+    padding:6px 12px;
+    font-size:13px;
+}
+
+#header {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 10vh;
+    width: 100%;
+    background-color: #2b3035;
+    border-bottom: 1.5px solid #04dfd9;
+}

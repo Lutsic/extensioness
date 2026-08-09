@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Extensioness</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+<div id="header">
+    <b id="gradient_title">Settings</b>
+</div>
+
+<div id="content">
+    <div class="setting-card">
+        <div class="setting-label">Color theme</div>
+        <div class="setting-options theme-options">
+            <button class="theme-btn" data-theme="Modern">Simple Modern</button>
+            <button class="theme-btn" data-theme="Sunset">Orange Sunset</button>
+        </div>
+    </div>
+
+    <div class="setting-card">
+        <div class="setting-label">Colored tiles for extensions</div>
+        <button class="toggle-btn" id="coloredTiles" data-state="On">On</button>
+    </div>
+
+    <div class="setting-card">
+        <div class="setting-label">Hide Extensioness when tab is unfocused</div>
+        <button class="toggle-btn" id="hideOnUnfocus" data-state="Off">Off</button>
+    </div>
+</div>
+
+<script src="main.js" defer></script>
+</body>
+</html>

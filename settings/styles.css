@@ -1,0 +1,152 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background-color: #202428;
+    font-family:Segoe UI, sans-serif;
+    color:white;
+    padding:40px;
+}
+
+#gradient_title {
+  /* Задаем градиентный фон */
+  background: linear-gradient(45deg, #26bdd8, #40ffdd);
+  
+  /* Обрезаем фон точно по контуру букв */
+  -webkit-background-clip: text;
+  background-clip: text;
+  
+  /* Делаем оригинальный цвет текста прозрачным, чтобы стал виден фон */
+  -webkit-text-fill-color: transparent;
+  
+  /* Сброс для корректного отображения */
+  color: transparent; 
+
+  font-size: 5vh;
+}
+
+#header {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 10vh;
+    width: 100%;
+    background-color: #2b3035;
+    border-bottom: 1.5px solid #04dfd9;
+    z-index: 100;
+}
+
+#content {
+    margin-top: 11vh;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.setting-card {
+    background-color: #2b3035;
+    border: 1px solid #3a4048;
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.2s ease;
+    --hover-color: #04dfd9;
+}
+
+.setting-card:hover {
+    border-color: var(--hover-color);
+}
+
+.setting-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #e0e4e8;
+}
+
+.setting-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.theme-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 10px 16px;
+    border: 1.5px solid #3a4048;
+    border-radius: 8px;
+    background-color: #252a30;
+    color: #c0c4c8;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    --hover-color: #04dfd9;
+    --active-color: linear-gradient(45deg, #26bdd8, #40ffdd);
+}
+
+.theme-btn:hover {
+    border-color: var(--hover-color);
+    color: #fff;
+}
+
+.theme-btn.active {
+    background: var(--active-color);
+    border-color: transparent;
+    color: #1a1e22;
+    font-weight: 600;
+}
+
+.toggle-btn {
+    align-self: flex-start;
+    min-width: 80px;
+    padding: 10px 20px;
+    border: 1.5px solid #3a4048;
+    border-radius: 8px;
+    background-color: #252a30;
+    color: #c0c4c8;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    --active-color: linear-gradient(45deg, #26bdd8, #40ffdd);
+}
+
+.toggle-btn:hover {
+    border-color: #04dfd9;
+}
+
+.toggle-btn[data-state="On"] {
+    background: var(--active-color);
+    border-color: transparent;
+    color: #1a1e22;
+    font-weight: 600;
+}
+
+.toggle-btn[data-state="Off"] {
+    background-color: #252a30;
+    border-color: #3a4048;
+    color: #c0c4c8;
+}
+
+canvas {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -10;
+    }

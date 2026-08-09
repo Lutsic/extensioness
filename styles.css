@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: whitesmoke;
+    background-color: #202428;
+}
+
+#content {
+    width: 65%;
+    margin: 0 auto;
+}
+
+#extness {
+    margin-top: 11vh;
+}
+
+#gradient_title {
+  /* Задаем градиентный фон */
+  background: linear-gradient(45deg, #26bdd8, #40ffdd);
+  
+  /* Обрезаем фон точно по контуру букв */
+  -webkit-background-clip: text;
+  background-clip: text;
+  
+  /* Делаем оригинальный цвет текста прозрачным, чтобы стал виден фон */
+  -webkit-text-fill-color: transparent;
+  
+  /* Сброс для корректного отображения */
+  color: transparent; 
+
+  font-size: 5vh;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 40px 40px;
+    gap: 60px;
+    background-color: #2b3035;
+    border-radius: 15px;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+#extensions_txt {
+    margin: 0;
+    font-size: 48px;
+    background: linear-gradient(45deg, #26bdd8, #40ffdd);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    
+    -webkit-text-fill-color: transparent;
+    color: transparent; 
+}
+
+#online_games_txt {
+    margin: 0;
+    font-size: 48px;
+    background: linear-gradient(45deg, #26bdd8, #40ffdd);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    
+    -webkit-text-fill-color: transparent;
+    color: transparent; 
+}
+
+.hero-content p {
+    margin: 0;
+    font-size: 20px;
+}
+
+.hero-content button {
+    width: fit-content;
+    padding: 12px 24px;
+    font-size: 18px;
+    background: #26BDD8;
+    background: linear-gradient(60deg,rgba(38, 189, 216, 1) 50%, rgba(64, 255, 221, 1) 100%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.hero-content button:hover {
+    transform: scale(1.05);
+    transition: 0.2s;  
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-image img {
+    max-width: 110%;
+    height: auto;
+}
+
+hr {
+    color: rgba(64, 255, 221, 1); 
+}
+
+
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content {
+        align-items: center;
+    }
+
+    #content {
+    width: 100%;
+    margin: 0;
+    }
+
+    .hero-image img {
+        max-width: 120%;
+        height: auto;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+#header {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 10vh;
+    width: 100%;
+    background-color: #2b3035;
+    border-bottom: 1.5px solid #04dfd9;
+}

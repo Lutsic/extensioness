@@ -1,0 +1,46 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background-color: #202428;
+    font-family:Segoe UI, sans-serif;
+    color:white;
+    padding:40px;
+}
+
+.gradient_title {
+  /* Задаем градиентный фон */
+  background: linear-gradient(45deg, #26bdd8, #40ffdd);
+  
+  /* Обрезаем фон точно по контуру букв */
+  -webkit-background-clip: text;
+  background-clip: text;
+  
+  /* Делаем оригинальный цвет текста прозрачным, чтобы стал виден фон */
+  -webkit-text-fill-color: transparent;
+  
+  /* Сброс для корректного отображения */
+  color: transparent; 
+
+  font-size: 5vh;
+}
+
+#header {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 10vh;
+    width: 100%;
+    background-color: #2b3035;
+    border-bottom: 1.5px solid #04dfd9;
+}
+
+#content {
+    margin-top: 11vh;
+}
