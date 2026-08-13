@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lutsic.github.io/extensioness/sitemap.xml
