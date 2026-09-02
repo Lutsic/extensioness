@@ -4,71 +4,6 @@ const start_screen = document.getElementById("start_screen");
 const filters_btn = document.getElementById("filters-btn");
 const filters_menu = document.getElementById("filters_menu");
 
-const DEFAULTS = {
-    theme: 'Modern',
-    coloredTiles: 'On',
-    hideOnUnfocus: 'Off'
-};
-
-
-function loadSettings() {
-    const settings = {};
-    settings.theme = localStorage.getItem('extensioness_theme') || DEFAULTS.theme;
-    settings.coloredTiles = localStorage.getItem('extensioness_coloredTiles') || DEFAULTS.coloredTiles;
-    settings.hideOnUnfocus = localStorage.getItem('extensioness_hideOnUnfocus') || DEFAULTS.hideOnUnfocus;
-    return settings;
-}
-
-const settings = loadSettings()
-
-if(settings.hideOnUnfocus == 'On'){
-    document.addEventListener("visibilitychange", () => {
-        if (document.hidden) {
-            window.location.href = 'https://google.com';
-        }
-    });
-}
-
-
-
-function updateTheme() {
-
-if (settings.theme == "Modern"){
-    document.getElementById("gradient_text").style.background = "linear-gradient(45deg, #26bdd8, #40ffdd)";
-    document.getElementById("gradient_text").style.backgroundClip = "text";
-    document.getElementById("gradient_text").style.webkitBackgroundClip = "text";
-    document.getElementById("gradient_text").style.color = "transparent";
-
-    document.getElementById("header").style.borderBottom = "1.5px solid #04dfd9";
-
-    document.querySelector("body").style.backgroundColor = "#202428";
-    document.getElementById("header").style.backgroundColor = "#2b3035";
-    document.getElementById("searchbox").style.backgroundColor = "#343a40";
-
-    return;
-}
-if (settings.theme == "Sunset"){
-    document.getElementById("gradient_text").style.background = "linear-gradient(45deg, #ff6f4b, #e13661)";
-    document.getElementById("gradient_text").style.backgroundClip = "text";
-    document.getElementById("gradient_text").style.webkitBackgroundClip = "text";
-    document.getElementById("gradient_text").style.color = "transparent";
-
-    document.getElementById("header").style.borderBottom = "1.5px solid #fd4c55";
-
-    document.querySelector("body").style.backgroundColor = "#0F1118";
-    document.getElementById("header").style.backgroundColor = "#161A24";
-    document.getElementById("searchbox").style.backgroundColor = "#202636";
-
-    return;
-}
-if (settings.theme == "Cosmos"){
-    return;
-}
-
-}
-
-updateTheme()
-
 async function getAverageColor(url) {
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -103,7 +38,7 @@ async function getAverageColor(url) {
             g = Math.round(g / pixels);
             b = Math.round(b / pixels);
 
-            resolve(`rgba(${r + 60}, ${g + 60}, ${b + 60}, 0.7)`);
+            resolve(`rgba(${r + 40}, ${g + 40}, ${b + 40}, 0.7)`);
         };
 
         img.onerror = reject;
@@ -111,38 +46,16 @@ async function getAverageColor(url) {
     });
 }
 
-function search_extensions(q) {
-    container.innerHTML = "";
-    const stmt = db.prepare(`
-        SELECT *
-        FROM extensions
-        WHERE name LIKE ?
-        AND type LIKE ?
-        ORDER BY users_count DESC
-        LIMIT 100;
-    `);
-
-    if (chromium_active) {
-    stmt.bind([`%${q}%`, `%Chromium%`]);
-    } else {
-    stmt.bind([`%${q}%`, `%Firefox%`]);  
-    }
-
-    let extension_count = 0
-    while (stmt.step()) {
-        extension_count += 1
-        const tileId = `ext_num_${extension_count}`;
-        const extension = stmt.getAsObject();
-
+function add_extension(extension, tileId) {
         const id = extension.id;
         const slug = extension.slug;
         const name = extension.name;
         const desc = extension.short_description;
         const icon = extension.icon_url;
-        const dev = extension.developer === "None" ? "" : extension.developer;
-        const rating = extension.rating === "None" ? "0" : extension.rating;
-        const rating_count = extension.rating_count === "None" ? "0" : extension.rating_count;
-        const users_count = extension.users_count === "None" ? "0" : extension.users_count;
+        const dev = extension.developer === null ? "" : extension.developer;
+        const rating = extension.rating === null ? "0" : extension.rating;
+        const rating_count = extension.rating_count === null ? "0" : extension.rating_count;
+        const users_count = extension.users_count === null ? "0" : extension.users_count;
         const categories = extension.categories;
         const featured = extension.is_featured;
         const template_featured = `
@@ -173,12 +86,11 @@ function search_extensions(q) {
         `;
 
         if(featured == 1){
-        container.insertAdjacentHTML("beforeend", template_featured); 
+            container.insertAdjacentHTML("beforeend", template_featured); 
         }else{
             container.insertAdjacentHTML("beforeend", template_basic); 
         }
         
-
         if (settings.coloredTiles == "On") {
             getAverageColor(icon).then(color => {
                 const tile = document.getElementById(tileId);
@@ -187,10 +99,32 @@ function search_extensions(q) {
                 }
             });
         }
+}
 
+function search_extensions(q) {
+    container.innerHTML = "";
+    const stmt = db.prepare(`
+        SELECT *
+        FROM extensions
+        WHERE name LIKE ?
+        AND type LIKE ?
+        ORDER BY users_count DESC
+        LIMIT 100;
+    `);
 
+    if (chromium_active) {
+    stmt.bind([`%${q}%`, `%Chromium%`]);
+    } else {
+    stmt.bind([`%${q}%`, `%Firefox%`]);  
     }
 
+    let extension_count = 0
+    while (stmt.step()) {
+        extension_count += 1
+        const tileId = `ext_num_${extension_count}`;
+        const extension = stmt.getAsObject();
+        add_extension(extension, tileId)
+    }
     stmt.free();
 }
 
@@ -270,62 +204,8 @@ function by_category(cat){
         extension_count += 1
         const tileId = `ext_num_${extension_count}`;
         const extension = stmt.getAsObject();
-
-        const id = extension.id;
-        const slug = extension.slug;
-        const name = extension.name;
-        const desc = extension.short_description;
-        const icon = extension.icon_url;
-        const dev = extension.developer === "None" ? "" : extension.developer;
-        const rating = extension.rating === "None" ? "0" : extension.rating;
-        const rating_count = extension.rating_count === "None" ? "0" : extension.rating_count;
-        const users_count = extension.users_count === "None" ? "0" : extension.users_count;
-        const categories = extension.categories;
-        const featured = extension.is_featured;
-        const template_featured = `
-        <a href="https://clients2.google.com/service/update2/crx?response=redirect&prodversion=122.0&acceptformat=crx2,crx3&x=id%3D${id}%26installsource%3Dondemand%26uc" class="tile-link" class="tile-link">
-        <div class="tile" id="${tileId}">
-            <img src="${icon}">
-            <div class="text">
-                <div class="title"><svg class="featured_badge" height="14" viewBox="0 0 24 24" width="14" focusable="false" class="NXD8lf mTuktf NMm5M"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2 6 2v-7.72c1.24-1.41 2-3.25 2-5.28zm-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6zm0 15-4 1.02v-3.1c1.18.68 2.54 1.08 4 1.08s2.82-.4 4-1.08v3.1L12 19zm-3-9c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3-1.34-3-3z"></path></svg>${name}</div>
-                <div class="info">${users_count} users, ${rating}/5★(${rating_count}), ${dev}.</div>
-                <div class="desc">${desc}</div>
-                <div class="info">${categories}</div>
-            </div>
-        </div>
-        </a>
-        `;
-        const template_basic = `
-            <a href="https://clients2.google.com/service/update2/crx?response=redirect&prodversion=122.0&acceptformat=crx2,crx3&x=id%3D${id}%26installsource%3Dondemand%26uc" class="tile-link">
-            <div class="tile" id="${tileId}">
-                <img src="${icon}">
-                <div class="text">
-                    <div class="title">${name}</div>
-                    <div class="info">${users_count} users, ${rating}/5★(${rating_count}), ${dev}.</div>
-                    <div class="desc">${desc}</div>
-                    <div class="info">${categories}</div>
-                </div>
-            </div>
-            </a>
-        `;
-
-        if(featured == 1){
-        container.insertAdjacentHTML("beforeend", template_featured); 
-        }else{
-            container.insertAdjacentHTML("beforeend", template_basic); 
-        }
-        
-        if (settings.coloredTiles == "On") {
-            getAverageColor(icon).then(color => {
-                const tile = document.getElementById(tileId);
-                if (tile) {
-                    tile.style.backgroundColor = color;
-                }
-            });
-        }
-
+        add_extension(extension, tileId)
     }
-
     stmt.free();
 }
 
@@ -356,64 +236,15 @@ function show_recommended(){
         extension_count += 1
         const tileId = `ext_num_${extension_count}`;
         const extension = stmt.getAsObject();
-
-        const id = extension.id;
-        const slug = extension.slug;
-        const name = extension.name;
-        const desc = extension.short_description;
-        const icon = extension.icon_url;
-        const dev = extension.developer === "None" ? "" : extension.developer;
-        const rating = extension.rating === "None" ? "0" : extension.rating;
-        const rating_count = extension.rating_count === "None" ? "0" : extension.rating_count;
-        const users_count = extension.users_count === "None" ? "0" : extension.users_count;
-        const categories = extension.categories;
-        const featured = extension.is_featured;
-        const template_featured = `
-        <a href="https://clients2.google.com/service/update2/crx?response=redirect&prodversion=122.0&acceptformat=crx2,crx3&x=id%3D${id}%26installsource%3Dondemand%26uc" class="tile-link" class="tile-link">
-        <div class="tile" id="${tileId}">
-            <img src="${icon}">
-            <div class="text">
-                <div class="title"><svg class="featured_badge" height="14" viewBox="0 0 24 24" width="14" focusable="false" class="NXD8lf mTuktf NMm5M"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2 6 2v-7.72c1.24-1.41 2-3.25 2-5.28zm-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6 2.69-6 6-6zm0 15-4 1.02v-3.1c1.18.68 2.54 1.08 4 1.08s2.82-.4 4-1.08v3.1L12 19zm-3-9c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3-1.34-3-3z"></path></svg>${name}</div>
-                <div class="info">${users_count} users, ${rating}/5★(${rating_count}), ${dev}.</div>
-                <div class="desc">${desc}</div>
-                <div class="info">${categories}</div>
-            </div>
-        </div>
-        </a>
-        `;
-        const template_basic = `
-            <a href="https://clients2.google.com/service/update2/crx?response=redirect&prodversion=122.0&acceptformat=crx2,crx3&x=id%3D${id}%26installsource%3Dondemand%26uc" class="tile-link">
-            <div class="tile" id="${tileId}">
-                <img src="${icon}">
-                <div class="text">
-                    <div class="title">${name}</div>
-                    <div class="info">${users_count} users, ${rating}/5★(${rating_count}), ${dev}.</div>
-                    <div class="desc">${desc}</div>
-                    <div class="info">${categories}</div>
-                </div>
-            </div>
-            </a>
-        `;
-
-        if(featured == 1){
-        container.insertAdjacentHTML("beforeend", template_featured); 
-        }else{
-            container.insertAdjacentHTML("beforeend", template_basic); 
-        }
-        
-        if (settings.coloredTiles == "On") {
-            getAverageColor(icon).then(color => {
-                const tile = document.getElementById(tileId);
-                if (tile) {
-                    tile.style.backgroundColor = color;
-                }
-            });
-        }
-
+        add_extension(extension, tileId)
     }
-
     stmt.free();
 }
+
+
+// ========================================
+// filter buttons
+// ========================================
 
 function filter_button(btn, cat){
     btn.addEventListener('click', () => {
@@ -448,58 +279,72 @@ filter_button(document.getElementById("shopping_btn"), "Shopping");
 filter_button(document.getElementById("travel_btn"), "Travel");
 
 
+// ========================================
+// firefox and chromium modes
+// ========================================
 
-let chromium_active = false
-let firefox_active = false
-
-document.getElementById("chromium-btn").addEventListener('click', () => {
-    if(chromium_active){
-        chromium_active = false
-        firefox_active = true
-        document.getElementById("chromium_disabled").style.display = "block";
-        document.getElementById("chromium_enabled").style.display = "none";
+function enable_chromium (ScreenWidth) {
+    if (ScreenWidth <= 900) {
+        document.getElementById("chromium_disabled").style.display = "none";
+        document.getElementById("chromium_enabled").style.display = "block";
         document.getElementById("firefox_disabled").style.display = "none";
-        document.getElementById("firefox_enabled").style.display = "block";
+        document.getElementById("firefox_enabled").style.display = "none";
+
+        document.getElementById("firefox-btn").style.display = "none";
+        document.getElementById("chromium-btn").style.display = "block";
     } else {
-        chromium_active = true
-        firefox_active = false
         document.getElementById("chromium_disabled").style.display = "none";
         document.getElementById("chromium_enabled").style.display = "block";
         document.getElementById("firefox_disabled").style.display = "block";
         document.getElementById("firefox_enabled").style.display = "none";
     }
-});
+}
 
-document.getElementById("firefox-btn").addEventListener('click', () => {
-    if(firefox_active){
-        chromium_active = true
-        firefox_active = false
+function enable_firefox (ScreenWidth) {
+    if (ScreenWidth <= 900) {
         document.getElementById("chromium_disabled").style.display = "none";
-        document.getElementById("chromium_enabled").style.display = "block";
-        document.getElementById("firefox_disabled").style.display = "block";
-        document.getElementById("firefox_enabled").style.display = "none";
+        document.getElementById("chromium_enabled").style.display = "none";
+        document.getElementById("firefox_disabled").style.display = "none";
+        document.getElementById("firefox_enabled").style.display = "block";
+
+        document.getElementById("firefox-btn").style.display = "block";
+        document.getElementById("chromium-btn").style.display = "none";
     } else {
-        chromium_active = false
-        firefox_active = true
         document.getElementById("chromium_disabled").style.display = "block";
         document.getElementById("chromium_enabled").style.display = "none";
         document.getElementById("firefox_disabled").style.display = "none";
         document.getElementById("firefox_enabled").style.display = "block";
+    }
+}
+
+
+let chromium_active = false
+const ScreenWidth = window.innerWidth;
+
+document.getElementById("chromium-btn").addEventListener('click', () => {
+    if(chromium_active){
+        chromium_active = false
+        enable_firefox(ScreenWidth)
+    } else {
+        chromium_active = true
+        enable_chromium(ScreenWidth)
+    }
+});
+
+document.getElementById("firefox-btn").addEventListener('click', () => {
+    if(!chromium_active){
+        chromium_active = true
+        enable_chromium(ScreenWidth)
+    } else {
+        chromium_active = false
+        enable_firefox(ScreenWidth)
     }
 });
 
 if (typeof InstallTrigger !== "undefined" || navigator.userAgent.includes("Firefox")){
         chromium_active = false
-        firefox_active = true
-        document.getElementById("chromium_disabled").style.display = "block";
-        document.getElementById("chromium_enabled").style.display = "none";
-        document.getElementById("firefox_disabled").style.display = "none";
-        document.getElementById("firefox_enabled").style.display = "block";
+        enable_firefox(ScreenWidth)
 } else {
         chromium_active = true
-        firefox_active = false
-        document.getElementById("chromium_disabled").style.display = "none";
-        document.getElementById("chromium_enabled").style.display = "block";
-        document.getElementById("firefox_disabled").style.display = "block";
-        document.getElementById("firefox_enabled").style.display = "none";
+        enable_chromium(ScreenWidth)
 }

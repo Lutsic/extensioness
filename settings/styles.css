@@ -1,3 +1,19 @@
+:root[data-theme="Modern"] {
+    --accent1: #04dfd9;
+    --accent2: #40ffdd;
+    --bg: #181b1e;
+    --main-color: #1f2328;
+    --second-color: #252a30;
+}
+
+:root[data-theme="Sunset"] {
+    --accent1: #ff6f4b;
+    --accent2: #e13661;
+    --bg: #0f1118;
+    --main-color: #161a24;
+    --second-color: #202636;
+}
+
 *{
     margin:0;
     padding:0;
@@ -5,24 +21,17 @@
 }
 
 body{
-    background-color: #202428;
+    background-color: var(--bg);
     font-family:Segoe UI, sans-serif;
     color:white;
     padding:40px;
 }
 
 #gradient_title {
-  /* Задаем градиентный фон */
-  background: linear-gradient(45deg, #26bdd8, #40ffdd);
-  
-  /* Обрезаем фон точно по контуру букв */
+  background: linear-gradient(45deg, var(--accent1), var(--accent2));
   -webkit-background-clip: text;
   background-clip: text;
-  
-  /* Делаем оригинальный цвет текста прозрачным, чтобы стал виден фон */
   -webkit-text-fill-color: transparent;
-  
-  /* Сброс для корректного отображения */
   color: transparent; 
 
   font-size: 5vh;
@@ -37,8 +46,8 @@ body{
     left: 0;
     height: 10vh;
     width: 100%;
-    background-color: #2b3035;
-    border-bottom: 1.5px solid #04dfd9;
+    background-color: var(--main-color);
+    border-bottom: 1.5px solid var(--accent1);
     z-index: 100;
 }
 
@@ -53,7 +62,7 @@ body{
 }
 
 .setting-card {
-    background-color: #2b3035;
+    background-color: var(--second-color);
     border: 1px solid #3a4048;
     border-radius: 12px;
     padding: 20px 24px;
@@ -61,11 +70,10 @@ body{
     flex-direction: column;
     gap: 14px;
     transition: border-color 0.2s ease;
-    --hover-color: #04dfd9;
 }
 
 .setting-card:hover {
-    border-color: var(--hover-color);
+    border-color: var(--accent1);
 }
 
 .setting-label {
@@ -86,24 +94,21 @@ body{
     padding: 10px 16px;
     border: 1.5px solid #3a4048;
     border-radius: 8px;
-    background-color: #252a30;
+    background-color: var(--second-color);
     color: #c0c4c8;
     font-family: inherit;
     font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.2s ease;
-
-    --hover-color: #04dfd9;
-    --active-color: linear-gradient(45deg, #26bdd8, #40ffdd);
 }
 
 .theme-btn:hover {
-    border-color: var(--hover-color);
+    border-color: var(--accent1);
     color: #fff;
 }
 
 .theme-btn.active {
-    background: var(--active-color);
+    background: linear-gradient(45deg, var(--accent1), var(--accent2));
     border-color: transparent;
     color: #1a1e22;
     font-weight: 600;
@@ -115,15 +120,13 @@ body{
     padding: 10px 20px;
     border: 1.5px solid #3a4048;
     border-radius: 8px;
-    background-color: #252a30;
+    background-color: var(--second-color);
     color: #c0c4c8;
     font-family: inherit;
     font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
-
-    --active-color: linear-gradient(45deg, #26bdd8, #40ffdd);
 }
 
 .toggle-btn:hover {
@@ -131,22 +134,14 @@ body{
 }
 
 .toggle-btn[data-state="On"] {
-    background: var(--active-color);
+    background: linear-gradient(45deg, var(--accent1), var(--accent2));
     border-color: transparent;
     color: #1a1e22;
     font-weight: 600;
 }
 
 .toggle-btn[data-state="Off"] {
-    background-color: #252a30;
+    background-color: var(--second-color);
     border-color: #3a4048;
     color: #c0c4c8;
 }
-
-canvas {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -10;
-    }

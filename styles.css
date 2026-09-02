@@ -1,9 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+:root[data-theme="Modern"] {
+    --accent1: #04dfd9;
+    --accent2: #40ffdd;
+    --bg: #181b1e;
+    --main-color: #1f2328;
+    --second-color: #252a30;
+}
+
+:root[data-theme="Sunset"] {
+    --accent1: #ff6f4b;
+    --accent2: #e13661;
+    --bg: #0f1118;
+    --main-color: #161a24;
+    --second-color: #202636;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     color: whitesmoke;
-    background-color: #202428;
+    background-color: var(--bg);
 }
 
 #content {
@@ -12,21 +28,19 @@ body {
 }
 
 #extness {
-    margin-top: 11vh;
+    margin-top: 12vh;
+    margin-bottom: 2vh;
+}
+
+#games {
+    margin-top: 2vh;
 }
 
 #gradient_title {
-  /* Задаем градиентный фон */
-  background: linear-gradient(45deg, #26bdd8, #40ffdd);
-  
-  /* Обрезаем фон точно по контуру букв */
+  background: linear-gradient(45deg, var(--accent1), var(--accent2));
   -webkit-background-clip: text;
   background-clip: text;
-  
-  /* Делаем оригинальный цвет текста прозрачным, чтобы стал виден фон */
   -webkit-text-fill-color: transparent;
-  
-  /* Сброс для корректного отображения */
   color: transparent; 
 
   font-size: 5vh;
@@ -36,13 +50,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 40px 40px 40px;
     gap: 60px;
-    background-color: #2b3035;
-    border-radius: 15px;
+    background-color: var(--main-color);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.37);
 }
 
 .hero-content {
@@ -50,24 +65,14 @@ body {
     flex-direction: column;
     gap: 20px;
     flex: 1;
+    color: #a0a6b1;
 }
 
-#extensions_txt {
-    margin: 0;
-    font-size: 48px;
-    background: linear-gradient(45deg, #26bdd8, #40ffdd);
-
-    -webkit-background-clip: text;
-    background-clip: text;
-    
-    -webkit-text-fill-color: transparent;
-    color: transparent; 
-}
-
+#extensions_txt,
 #online_games_txt {
     margin: 0;
     font-size: 48px;
-    background: linear-gradient(45deg, #26bdd8, #40ffdd);
+    background: linear-gradient(45deg, var(--accent1), var(--accent2));
 
     -webkit-background-clip: text;
     background-clip: text;
@@ -86,16 +91,16 @@ body {
     padding: 12px 24px;
     font-size: 18px;
     background: #26BDD8;
-    background: linear-gradient(60deg,rgba(38, 189, 216, 1) 50%, rgba(64, 255, 221, 1) 100%);
+    background: linear-gradient(45deg, var(--accent1), var(--accent2));
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     color: white;
     cursor: pointer;
 }
 
 .hero-content button:hover {
-    transform: scale(1.05);
-    transition: 0.2s;  
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .hero-image {
@@ -107,12 +112,39 @@ body {
 .hero-image img {
     max-width: 110%;
     height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 hr {
-    color: rgba(64, 255, 221, 1); 
+    color: var(--accent1)  
 }
 
+#github_icon_sunset,
+#games_img_mobile {
+    display: none;
+}
+
+#github_icon img {
+    height: 7vh;
+    width: 7vh;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+
+#header {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 10vh;
+    width: 100%;
+    background-color: var(--main-color);
+    border-bottom: 1.5px solid var(--accent1);
+}
 
 
 @media (max-width: 768px) {
@@ -136,17 +168,13 @@ hr {
         margin-left: 20px;
         margin-right: 20px;
     }
-}
 
-#header {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    height: 10vh;
-    width: 100%;
-    background-color: #2b3035;
-    border-bottom: 1.5px solid #04dfd9;
+    #games_img_desktop,
+    #github_icon {
+        display: none;
+    }
+
+    #games_img_mobile {
+        display: flex;
+    }
 }

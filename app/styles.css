@@ -1,16 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+:root[data-theme="Modern"] {
+    --accent1: #04dfd9;
+    --accent2: #40ffdd;
+    --bg: #181b1e;
+    --main-color: #1f2328;
+    --second-color: #252a30;
+}
+
+:root[data-theme="Sunset"] {
+    --accent1: #ff6f4b;
+    --accent2: #e13661;
+    --bg: #0f1118;
+    --main-color: #161a24;
+    --second-color: #202636;
+}
+
 body {
-    background-color: #202428;
+    background-color: var(--bg);
     font-family: 'Roboto', sans-serif;
     color: whitesmoke;
-    /*
-    background-image: url('background.png'); 
-    background-repeat: no-repeat; 
-    background-size: cover; 
-    background-position: center; 
-    background-attachment: fixed; 
-    */
 }
 
 .grid {
@@ -81,44 +90,27 @@ body {
     left: 0;
     height: 10vh;
     width: 100%;
-    background-color: #2b3035;
-    border-bottom: 1.5px solid #04dfd9;
+    background-color: var(--main-color);
+    border-bottom: 1.5px solid var(--accent1);
 }
 
 #searchbox {
     width: 30%;
     height: 47px;
     font-size: 20px;
-    background-color: #343a40;
+    background-color: var(--second-color);
     border: none;
     border-radius: 15px;
     color: white;
     padding-left: 30px;
-}
-
-#searchbox:focus {
-  outline: none;
+    outline: none;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
 }
 
 #start_screen {
     color: whitesmoke;
     text-align: center;
-}
-
-.svg-icon {
-    stroke: #b0b5b9;
-    color: #b0b5b9;
-}
-
-#filters-btn {
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-}
-
-#filters-btn:hover{
-    transform: scale(1.1);
-    transition: 0.2s;   
 }
 
 #filters_menu {
@@ -170,40 +162,41 @@ body {
 }
 
 .filter_tile:hover {
-    transform: scale(1.03);
-    transition: 0.2s;  
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);  
 }
 
-.browser-btn {
-    border: none;
-    cursor: pointer;
-    background: transparent;
-}
-
-.browser-btn-div {
-    border-radius: 8px;
-}
-
-.browser-img {
-    width: 37px;
-    height: 37px;
+.img-btn {
+    width: 50px;
+    height: 50px;
     object-fit: cover;
 }
 
-.browser-btn-div:hover {
-    transform: scale(1.11);
-    transition: 0.2s;  
+.browser-btn:hover, 
+#filters-btn:hover, 
+#settings-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #f0f2f5;
+    transform: translateY(-1px);
 }
 
+.browser-btn, 
+#filters-btn, 
 #settings-btn {
     background: transparent;
     border: none;
     cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    transition: all 0.2s ease;
 }
 
-#settings-btn:hover{
-    transform: scale(1.1);
-    transition: 0.2s;   
+#settings_sunset {
+    display: none;
 }
 
 #start_screen h1 {
@@ -225,17 +218,10 @@ body {
 }
 
 #gradient_text {
-  /* Задаем градиентный фон */
-  background: linear-gradient(45deg, #26bdd8, #40ffdd);
-  
-  /* Обрезаем фон точно по контуру букв */
+  background: linear-gradient(45deg, var(--accent1), var(--accent2));
   -webkit-background-clip: text;
   background-clip: text;
-  
-  /* Делаем оригинальный цвет текста прозрачным, чтобы стал виден фон */
   -webkit-text-fill-color: transparent;
-  
-  /* Сброс для корректного отображения */
   color: transparent; 
 }
 
@@ -247,26 +233,17 @@ body {
     padding-top: 11vh;
 }
 
-#filters_menu {
+#filters_menu,
+#settings-btn {
     display: none;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 20px;
-    padding-top: 11vh;
 }
 
 .filter_text {
-    overflow-wrap: break-word;
-    padding: 16px;
-    max-width: 100%;
-    display: -webkit-box;
-    position: absolute;
-    overflow: hidden;
-    font-weight: 700;
-    color: white;
     font-size: 5vw;
 }
 
 #start_screen h1 {
+    margin-top: 10vh;
     font-size: 10dvw;
 }
 
@@ -278,6 +255,10 @@ body {
 #start_screen div {
     width: 100%;
     margin-left: 0;
+}
+
+#searchbox {
+    width: 50%;
 }
 
 }

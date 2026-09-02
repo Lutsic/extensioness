@@ -15,58 +15,15 @@ function loadSettings() {
 
 
 function updateTheme() {
-const settings = loadSettings();
-
-if (settings.theme == "Modern"){
-    document.getElementById("gradient_title").style.background = "linear-gradient(45deg, #26bdd8, #40ffdd)";
-    document.getElementById("gradient_title").style.backgroundClip = "text";
-    document.getElementById("gradient_title").style.webkitBackgroundClip = "text";
-    document.getElementById("gradient_title").style.color = "transparent";
-
-    document.getElementById("header").style.borderBottom = "1.5px solid #04dfd9";
-
-    document.querySelectorAll(".setting-card").forEach(el => {el.style.setProperty("--hover-color", "#04dfd9");})
-
-    document.querySelector("body").style.backgroundColor = "#202428";
-    document.querySelectorAll(".setting-card").forEach(el => {el.style.backgroundColor = "#2b3035";})
-    document.querySelectorAll(".theme-btn").forEach(el => {el.style.backgroundColor = "#252a30";})
-    document.getElementById("header").style.backgroundColor = "#2b3035";
-
-    document.querySelectorAll(".theme-btn").forEach(el => {el.style.setProperty("--hover-color", "#04dfd9");})
-    document.querySelectorAll(".theme-btn").forEach(el => {el.style.setProperty("--active-color", "linear-gradient(45deg, #26bdd8, #40ffdd)");})
-
-    document.querySelectorAll(".toggle-btn").forEach(el => {el.style.setProperty("--active-color", "linear-gradient(45deg, #26bdd8, #40ffdd)");})
-
-    return;
-}
-if (settings.theme == "Sunset"){
-    document.getElementById("gradient_title").style.background = "linear-gradient(45deg, #ff6f4b, #e13661)";
-    document.getElementById("gradient_title").style.backgroundClip = "text";
-    document.getElementById("gradient_title").style.webkitBackgroundClip = "text";
-    document.getElementById("gradient_title").style.color = "transparent";
-
-    document.getElementById("header").style.borderBottom = "1.5px solid #fd4c55";
-
-    document.querySelectorAll(".setting-card").forEach(el => {el.style.setProperty("--hover-color", "#fd4c55");})
-
-    
-    document.querySelector("body").style.backgroundColor = "#0F1118";
-    document.querySelectorAll(".setting-card").forEach(el => {el.style.backgroundColor = "#161A24";})
-    document.querySelectorAll(".theme-btn").forEach(el => {el.style.backgroundColor = "#202636";})
-    document.getElementById("header").style.backgroundColor = "#161A24";
-
-    document.querySelectorAll(".theme-btn").forEach(el => {el.style.setProperty("--hover-color", "#fd4c55");})
-    document.querySelectorAll(".theme-btn").forEach(el => {el.style.setProperty("--active-color", "linear-gradient(45deg, #ff6f4b, #e13661)");})
-
-    document.querySelectorAll(".toggle-btn").forEach(el => {el.style.setProperty("--active-color", "linear-gradient(45deg, #ff6f4b, #e13661)");})
-
-    return;
-}
-if (settings.theme == "Cosmos"){
-
-    return;
-}
-
+    const settings = loadSettings();
+    if (settings.theme == "Modern"){
+        document.documentElement.dataset.theme = "Modern";
+        return;
+    }
+    if (settings.theme == "Sunset"){
+        document.documentElement.dataset.theme = "Sunset";
+        return;
+    }
 }
 
 
