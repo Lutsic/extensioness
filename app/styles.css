@@ -6,6 +6,8 @@
     --bg: #181b1e;
     --main-color: #1f2328;
     --second-color: #252a30;
+
+    --gradient: linear-gradient(45deg, #04dfd9, #40ffdd);
 }
 
 :root[data-theme="Sunset"] {
@@ -14,6 +16,8 @@
     --bg: #0f1118;
     --main-color: #161a24;
     --second-color: #202636;
+
+    --gradient: linear-gradient(45deg, #ff6f4b, #e13661);
 }
 
 body {
@@ -218,7 +222,7 @@ body {
 }
 
 #gradient_text {
-  background: linear-gradient(45deg, var(--accent1), var(--accent2));
+  background: var(--gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
